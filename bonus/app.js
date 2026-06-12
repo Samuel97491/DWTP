@@ -75,7 +75,7 @@ $("commune").onchange = e => {
     zoom: commune ? 13 : 12
   });
 };
-$("map").onclick = e => e.ctrlKey && flyTo({ pitch: (view.pitch + 30) % 90 });
+$("map").onclick = e => e.ctrlKey && flyTo({ pitch: view.pitch ? 0 : 60 });
 
 fetch("velov2026.json").then(r => r.text()).then(text => {
   stations = text.trim().split("\n").map(l => JSON.parse(l)).filter(s => s.lat && s.lng);
