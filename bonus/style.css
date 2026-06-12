@@ -1,0 +1,145 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0d1117;
+  color: #eee;
+  overflow: hidden;
+}
+
+#map {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#panel {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 300px;
+  background: rgba(20, 26, 36, 0.9);
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 18px;
+}
+
+#panel h1 {
+  font-size: 20px;
+  margin: 0 0 4px 0;
+}
+
+#panel .sub {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 16px;
+}
+
+#stats {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stat {
+  flex: 1;
+  background: #1b222e;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.stat b {
+  font-size: 20px;
+}
+
+.stat span {
+  display: block;
+  font-size: 10px;
+  color: #888;
+  margin-top: 2px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin: 12px 0 6px 0;
+}
+
+button {
+  background: #1b222e;
+  color: #ccc;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+button.active {
+  background: #2ea043;
+  color: #fff;
+  border-color: #2ea043;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  background: #1b222e;
+  color: #eee;
+  border: 1px solid #333;
+  border-radius: 6px;
+}
+
+#legend {
+  margin-top: 16px;
+  font-size: 11px;
+  color: #888;
+}
+
+#legend div {
+  margin: 5px 0;
+}
+
+#legend span {
+  display: inline-block;
+  width: 18px;
+  height: 10px;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+#query {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 400px;
+  background: rgba(20, 26, 36, 0.9);
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 0 18px;
+}
+
+#query h2 {
+  font-size: 14px;
+}
+
+#query pre {
+  font-family: monospace;
+  font-size: 12px;
+  color: #9cdcfe;
+  overflow: auto;
+  max-height: 65vh;
+}
+
+.tip {
+  font-family: Arial, sans-serif !important;
+  background: #1b222e !important;
+  border: 1px solid #333 !important;
+  border-radius: 6px !important;
+  color: #eee !important;
+  font-size: 12px !important;
+}

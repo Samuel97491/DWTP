@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Vélo'v Lyon</title>
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/deck.gl@9.0.36/dist.min.js"></script>
+</head>
+<body>
+<div id="map"></div>
+
+<div id="panel">
+  <h1>🚲 Vélo'v Lyon</h1>
+  <div class="sub">Carte du réseau (velov2026)</div>
+
+  <div id="stats">
+    <div class="stat"><b id="nStations">0</b><span>stations</span></div>
+    <div class="stat"><b id="nBikes">0</b><span>vélos</span></div>
+    <div class="stat"><b id="nFill">0%</b><span>remplissage</span></div>
+  </div>
+
+  <label>Affichage</label>
+  <div>
+    <button data-mode="hex" class="active">Hexagones</button>
+    <button data-mode="scatter">Stations</button>
+    <button data-mode="heat">Densité</button>
+  </div>
+
+  <label>Commune</label>
+  <select id="commune"><option value="">Toutes</option></select>
+
+  <label>Type de vélo</label>
+  <div>
+    <button data-weight="bikes" class="active">Tous</button>
+    <button data-weight="electrical">Électriques</button>
+    <button data-weight="mechanical">Mécaniques</button>
+  </div>
+
+  <div id="legend"></div>
+</div>
+
+<div id="query">
+  <h2>Requête MongoDB</h2>
+<pre>
+db.velov2026.aggregate([
+  { $match: { status: "OPEN" } },
+  { $group: {
+      _id: "$commune",
+      stations: { $sum: 1 },
+      totalBikes: { $sum: "$available_bikes" },
+      totalCapacity: { $sum: "$bike_stands" },
+      electrical: { $sum: "$total_stands.availabilities.electricalBikes" }
+  }},
+  { $project: {
+      _id: 0,
+      commune: "$_id",
+      stations: 1,
+      totalBikes: 1,
+      electrical: 1,
+      fillRate: { $round: [
+        { $multiply: [
+          { $divide: ["$totalBikes", "$totalCapacity"] }, 100
+        ]}, 1
+      ]}
+  }},
+  { $sort: { fillRate: -1 } }
+])
+</pre>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
