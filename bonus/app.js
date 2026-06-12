@@ -1,4 +1,5 @@
 let stations = [], mode = "hex", commune = "", weight = "bikes", deckgl;
+let view = { longitude: 4.842, latitude: 45.755, zoom: 12, pitch: 50, bearing: -18 };
 const hexColors = [[13,42,55],[16,86,96],[20,140,128],[78,190,118],[170,225,70],[250,210,80]];
 const $ = id => document.getElementById(id);
 
@@ -61,9 +62,20 @@ function buttons(attr, set) {
     set(b.dataset[attr]);
   });
 }
+const flyTo = v => deckgl.setProps({ initialViewState: view = { ...view, ...v, transitionDuration: 700 } });
+
 buttons("mode", v => { mode = v; updateLegend(); draw(); });
 buttons("weight", v => { weight = v; draw(); });
-$("commune").onchange = e => { commune = e.target.value; updateStats(); draw(); };
+$("commune").onchange = e => {
+  commune = e.target.value; updateStats(); draw();
+  let d = getData();
+  if (d.length) flyTo({
+    longitude: d.reduce((a, s) => a + s.lng, 0) / d.length,
+    latitude: d.reduce((a, s) => a + s.lat, 0) / d.length,
+    zoom: commune ? 13 : 12
+  });
+};
+$("map").onclick = e => e.ctrlKey && flyTo({ pitch: (view.pitch + 30) % 90 });
 
 fetch("velov2026.json").then(r => r.text()).then(text => {
   stations = text.trim().split("\n").map(l => JSON.parse(l)).filter(s => s.lat && s.lng);
@@ -77,8 +89,9 @@ fetch("velov2026.json").then(r => r.text()).then(text => {
     container: "map",
     map: maplibregl,
     mapStyle: "https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json",
-    initialViewState: { longitude: 4.842, latitude: 45.755, zoom: 12, pitch: 50, bearing: -18 },
+    initialViewState: view,
     controller: true,
+    onViewStateChange: e => view = e.viewState,
     getTooltip,
     layers: makeLayers()
   });
