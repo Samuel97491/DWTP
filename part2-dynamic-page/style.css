@@ -1,0 +1,37 @@
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 2rem;
+    transition: background 0.2s;
+}
+
+.controls {
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+#svgContainer {
+    width: 450px;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+svg path {
+    fill: #cbd5e1;
+    stroke: #fff;
+    cursor: pointer;
+    transition: fill 0.2s;
+}
+
+svg path:hover {
+    fill: #ffd24d;
+}
+
+#status {
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #2563eb;
+}

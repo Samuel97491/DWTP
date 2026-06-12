@@ -1,0 +1,14 @@
+{
+  "name": "velov-web-app",
+  "version": "1.0.0",
+  "description": "Professional Vélo'v Lyon Dashboard",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0"
+  }
+}
